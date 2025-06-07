@@ -1,0 +1,68 @@
+SHIVAM TANEJA  
+B.E. Computer Engineering | Thapar Institute Of Engineering and Technology, Patiala | 8.88 CGPA  
+AI/ML FULL-STACK ENGINEER  
+
+Email: 23shivamtaneja@gmail.com  
+Phone: +91 9821090076  
+LinkedIn: linkedin.com/in/shivam-taneja200  
+GitHub: github.com/ramen-7  
+
+---
+
+EXPERIENCE
+
+**Software Engineer – J.P. Morgan Chase & Co., Bengaluru (Hybrid) | Jan 2024 – Present**  
+- Designed and implemented the front-end for a dashboard using React.js for performance metrics.  
+- Built a document parser using PaddleOCR and clustering algorithms like DBSCAN and UMAP, achieving 76.3% precision and 81.2% recall.  
+- Developed a clustering solution for error categorization with DBSCAN. Cluster Cohesion: 91.4%, Separation: 90.8%.  
+- Ported 1.2 PB of data to AWS S3 and optimized retrieval, saving $1M+ annually in storage/ops costs.
+
+**Samsung R&D Institute of India, Bengaluru (Remote) | Nov 2022 – May 2023**  
+- Led a 6-member team researching Region of Interest in sports videos.  
+- Curated a dataset via web scraping, released under Apache 2.0.  
+- Achieved 84% accuracy in ROI detection using PaddleOCR and DistilBERT.
+
+**Sahar Wellness | saharwellness.in**  
+- Built a responsive slot-booking app using MongoDB, React, Node.js for users, therapists, and admins.  
+- Designed end-to-end architecture with CI/CD and separate staging/production environments.  
+- Integrated AWS SQS + Lambda for decoupled payment verification, improving reliability.  
+- Used React Lazy + useContext to cut initial UI load from 3s to 0.3s.
+
+---
+
+PROJECTS & ACHIEVEMENTS
+
+**Kaggle - LLM Science Exam**  
+- Used K-Means to reduce RAG size by 95%, solving memory issues.  
+- Ensembling + RAG boosted MAP to 0.902 (+7%).  
+- FAISS + TF-IDF reduced retrieval time by 20%.  
+- Bronze medal, rank 172/2662 (Top 7%).
+
+**Kaggle - PII Data Detection (Learning Agency Lab)**  
+- Quantization led to 30% speed-up (small models) and 200% (large LLMs).  
+- Used a 4x DeBERTa weighted ensemble.  
+- Achieved F-beta score (β=5) of 0.957.  
+- Bronze medal, rank 164/2048 (Top 9%).
+
+**ICPC**  
+- ICPC Preliminary Round 2023: All India Rank: 125  
+- ICPC Regionals 2023: Kanpur & Chennai Sites  
+
+**Certifications**  
+- AWS Cloud Practitioner Certified  
+
+**Profiles**  
+- Kaggle: Competitions, Notebook & Dataset Expert  
+- LeetCode: 1750+ rating (Top 12%)  
+- CodeChef: 1600+ (3 star)  
+- Codeforces: https://codeforces.com/profile/ramentaneja  
+- Kaggle Certs:  
+  - LLM Science: https://www.kaggle.com/certification/competitions/shivamtaneja2304/kaggle-llm-science-exam  
+  - PII Detection: https://www.kaggle.com/certification/competitions/shivamtaneja2304/pii-detection-removal-from-educational-data  
+- GitHub: https://github.com/ramen-7  
+- Credly AWS: https://www.credly.com/badges/acdb99bf-66e8-4606-bd7c-6691dc3f5196/linked_in?t=skod0x
+
+---
+
+INTERESTS  
+- MMA, learning Japanese, and public speaking at Toastmasters.
