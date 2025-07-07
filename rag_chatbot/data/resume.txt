@@ -1,31 +1,107 @@
 {
+  "OVERVIEW": "AI/ML Engineer with 1+ years of experience building scalable systems and Applied AI solutions. Proficient in GenAI workflows, RAG, and cloud infrastructure (AWS), full-stack development, large-scale data pipelines, and model optimization. Recognized on Kaggle with top 10% global rankings for work in LLM retrieval and PII detection.",
+  "SKILLS": {
+    "ML/AI Tools": [
+      "CUDA", "PyTorch", "RAG", "Quantisation", "Langchain", "FAISS", "Transformers", "Pandas", "Numpy"
+    ],
+    "Technical Skills": [
+      "React.js", "Node.js", "MongoDB", "AWS S3", "Lambda", "SQS", "Jenkins", "Python", "Git", "Agile/Scrum"
+    ]
+  },
   "EXPERIENCE": [
     {
       "company": "J.P. Morgan Chase & Co.",
-      "role": "Software Engineer",
-      "location": "Bengaluru (Hybrid)",
-      "duration": "Jan 2024 – Present",
-      "details": "Built React.js dashboard, document parser with OCR + clustering, S3 migration saving $1M+"
+      "location": "Bengaluru",
+      "role": "Software Engineer, GenAI",
+      "dates": "Jan 2024 – Present",
+      "details": [
+        "Achieved 95.8%+ field-level accuracy and reduced manual verification time by 60% by building an automated KYC parser for 300+ document types using PyMuPDF, AWS Textract, and OpenAI APIs.",
+        "Improved field extraction accuracy by 4.7% through prompt engineering and few-shot examples.",
+        "Delivered 91.4% intra-cluster cohesion and 90.8% inter-cluster separation by building an error categorization pipeline using TF-IDF, metadata features, and HDBSCAN.",
+        "Reduced on-premise storage costs by over $1M annually by porting 1.2 PB of data to AWS S3 and optimizing retrieval pipelines."
+      ]
     },
     {
-      "company": "Samsung R&D Institute of India",
+      "company": "Samsung R&D Institute",
+      "location": "Bengaluru (Remote)",
       "role": "Research Intern",
-      "location": "Remote",
-      "duration": "Nov 2022 – May 2023",
-      "details": "Led ROI detection project, 84% accuracy, dataset via scraping"
+      "dates": "Nov 2022 – May 2023",
+      "details": [
+        "Achieved over 84% accuracy in detecting Regions of Interest using PaddleOCR and DistilBERT.",
+        "Led a team of 6 to research Region of Interest detection in sports footage.",
+        "Curated a publicly available dataset for model training by extracting data through web scraping, released under the Apache 2.0 license."
+      ]
     }
   ],
   "PROJECTS": [
     {
-      "name": "Kaggle – LLM Science Exam",
-      "rank": "Bronze, 172/2662",
-      "details": "Reduced RAG size by 95%, improved MAP by 7%, FAISS + TF-IDF"
+      "name": "Kaggle Science LLM Exam",
+      "certificate_link": "https://www.kaggle.com/certification/competitions/shivamtaneja2304/kaggle-llm-science-exam",
+      "details": [
+        "Reduced RAG size by 95% using K-Means clustering, resolving Out of Memory errors.",
+        "Improved Mean Average Precision to 0.902 (+7%) through RAG and model ensembling.",
+        "Accelerated retrieval by 20% by applying FAISS on TF-IDF embeddings.",
+        "Ranked Top 7% (172/2662) worldwide on Kaggle and awarded a Bronze Medal."
+      ]
     },
     {
-      "name": "Kaggle – PII Data Detection",
-      "rank": "Bronze, 164/2048",
-      "details": "Quantized models (30–200%), DeBERTa ensemble, F-beta 0.957"
+      "name": "Kaggle – The Learning Agency Lab – PII Data Detection",
+      "certificate_link": "https://www.kaggle.com/certification/competitions/shivamtaneja2304/pii-detection-removal-from-educational-data",
+      "details": [
+        "Improved inference speed by 30% on small and 200% on large LLMs through quantization.",
+        "Used a weighted ensemble of four DeBERTa models to achieve an F-score (β=5) of 0.957.",
+        "Placed Top 9% globally on Kaggle (164/2048) and received a Bronze Medal."
+      ]
+    },
+    {
+      "name": "Sahar Wellness",
+      "link": "http://saharwellness.in",
+      "details": [
+        "Reduced front-end load time from 3s to 0.3s by optimizing with React Lazy, useContext, and converting assets to WebP format.",
+        "Built a responsive slot booking platform using MongoDB, React, and Node.js for seamless scheduling across user types.",
+        "Set up CI/CD pipelines with isolated test and production environments, cutting feature cycle time from 10 to 3–4 days and reducing prod errors from 1 in 10 to 1 in 100."
+      ]
     }
   ],
-  ...
+  "EXTRA_CURRICULAR": [
+    "Toastmasters Public Speaker.",
+    "2x ICPC Regionals Finalist, Leetcode: 1800+ Rating (Top 8% worldwide), 3* CodeChef (1600+ Rating).",
+    "Kaggle – Competition, Notebook & Dataset Expert."
+  ],
+  "EDUCATION": {
+    "degree": "B.E. Computer Engineering",
+    "college": "Thapar Institute Of Engineering and Technology, Patiala",
+    "cgpa": "8.88 CGPA"
+  },
+  "PROFILES": [
+    {
+      "platform": "LinkedIn",
+      "link": "https://www.linkedin.com/in/shivam-taneja200"
+    },
+    {
+      "platform": "GitHub",
+      "link": "https://github.com/ramen-7"
+    },
+    {
+      "platform": "Codeforces",
+      "link": "https://codeforces.com/profile/ramentaneja"
+    },
+    {
+      "platform": "Kaggle",
+      "link": "https://www.kaggle.com/shivamtaneja2304"
+    },
+    {
+      "platform": "Leetcode",
+      "link": "https://leetcode.com/u/shivam_taneja/"
+    },
+    {
+      "platform": "Portfolio",
+      "link": "https://shivam-taneja.com"
+    }
+  ],
+  "CONTACT": {
+    "email": "23shivamtaneja@gmail.com",
+    "phone": "+91 9821090076",
+    "location": "Bengaluru, India"
+  }
 }

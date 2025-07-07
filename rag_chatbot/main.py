@@ -1,103 +1,66 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
-from sentence_transformers import SentenceTransformer
+from langchain.embeddings import HuggingFaceEmbeddings
+from langchain.vectorstores import Chroma
+from langchain.llms import HuggingFacePipeline
+from langchain.prompts import PromptTemplate
+from langchain.chains import RetrievalQA
 from transformers import pipeline
-from chromadb import Client
-from chromadb.utils import embedding_functions
-from nltk.tokenize import sent_tokenize
+from langchain.document_loaders import TextLoader
+from langchain.text_splitter import RecursiveCharacterTextSplitter
 import nltk
 
-# Download sentence tokenizer
-nltk.download('punkt')
+nltk.download("punkt")
 
-# === Load and chunk resume text ===
-with open("./data/resume.txt", "r", encoding="utf-8") as f:
-    full_text = f.read()
+# === Load and split resume ===
+loader = TextLoader("./data/resume.txt")
+docs = loader.load()
 
-# Split into semantic chunks based on double newlines
-documents = full_text.split("\n\n")
+# Optional: Split into smaller chunks if needed
+text_splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
+documents = text_splitter.split_documents(docs)
 
-# === Setup embedding and ChromaDB ===
-embed_model_id = "multi-qa-MiniLM-L6-cos-v1"
-embedder = SentenceTransformer(embed_model_id)
+# === Embeddings & Vectorstore ===
+embedding_model_name = "multi-qa-MiniLM-L6-cos-v1"
+embeddings = HuggingFaceEmbeddings(model_name=embedding_model_name)
 
-chroma_client = Client()
-collection = chroma_client.create_collection(
-    name="personal-info",
-    embedding_function=embedding_functions.SentenceTransformerEmbeddingFunction(embed_model_id)
+vectordb = Chroma.from_documents(documents, embedding=embeddings, persist_directory="./chroma_db")
+
+# === LLM ===
+hf_pipe = pipeline("text-generation", model="TinyLlama/TinyLlama-1.1B-Chat-v1.0", device_map="auto")
+llm = HuggingFacePipeline(pipeline=hf_pipe)
+
+# === Prompt Template ===
+prompt_template = PromptTemplate(
+    input_variables=["context", "question"],
+    template="""
+You are a virtual version of a person named Shivam. You may be asked questions in the first or third person.
+ONLY use the context below to answer. If unsure, say "I don’t know."
+
+Context:
+{context}
+
+Question: {question}
+Answer:"""
 )
 
-# Add document chunks to ChromaDB
-for i, chunk in enumerate(documents):
-    collection.add(documents=[chunk], ids=[f"chunk_{i}"])
+# === QA Chain ===
+qa_chain = RetrievalQA.from_chain_type(
+    llm=llm,
+    retriever=vectordb.as_retriever(search_kwargs={"k": 3}),
+    chain_type_kwargs={"prompt": prompt_template}
+)
 
-# === Load LLM ===
-llm = pipeline("text-generation", model="TinyLlama/TinyLlama-1.1B-Chat-v1.0", device_map="auto")
-
-# === FastAPI setup ===
+# === FastAPI ===
 app = FastAPI()
 
 class Query(BaseModel):
     question: str
 
-# Filter chunks by context type based on question
-def filter_by_scope_json(resume_json, question: str):
-    q = question.lower()
-    results = {}
-
-    if "project" in q and "work" in q:
-        # include both experience and projects
-        results["EXPERIENCE"] = resume_json.get("EXPERIENCE", [])
-        results["PROJECTS"] = resume_json.get("PROJECTS", [])
-    elif any(kw in q for kw in ["project", "projects", "built", "developed"]):
-        results["PROJECTS"] = resume_json.get("PROJECTS", [])
-    elif any(kw in q for kw in ["work", "company", "job", "experience", "employer"]):
-        results["EXPERIENCE"] = resume_json.get("EXPERIENCE", [])
-    elif any(kw in q for kw in ["certification", "certified"]):
-        results["CERTIFICATIONS"] = resume_json.get("CERTIFICATIONS", [])
-    elif any(kw in q for kw in ["profile", "leetcode", "github", "kaggle"]):
-        results["PROFILES"] = resume_json.get("PROFILES", [])
-    elif any(kw in q for kw in ["interest", "hobby", "passion"]):
-        results["INTERESTS"] = resume_json.get("INTERESTS", [])
-    elif any(kw in q for kw in ["contact", "email", "phone", "linkedin"]):
-        results["CONTACT"] = resume_json.get("CONTACT", [])
-    else:
-        # default fallback — return everything
-        results = resume_json
-
-    return results
-
-
-
 @app.post("/ask")
 def ask_question(query: Query):
-    # Narrow the documents using scope detection
-    scoped_docs = filter_by_scope(documents, query.question)
-
-    # Temporary collection for scoped documents
-    temp_collection = chroma_client.get_or_create_collection(
-        name="temp-scope",
-        embedding_function=embedding_functions.SentenceTransformerEmbeddingFunction(embed_model_id)
-    )
-    for i, doc in enumerate(scoped_docs):
-        temp_collection.add(documents=[doc], ids=[f"temp_chunk_{i}"])
-
-    results = temp_collection.query(query_texts=[query.question], n_results=3)
-    context = "\n".join(doc for docs in results["documents"] for doc in docs)
-
-    print(f"\n[Query]: {query.question}")
-    print(f"[Retrieved Context]:\n{context}\n")
-
-    prompt = f"""You are a virtual version of a person named Shivam. You may be asked questions in either the first person ("What are your skills?") or the third person ("What are Shivam's skills?"). 
-    ONLY use the context provided below to answer the question. If the answer is not in the context, respond with "I don’t know."
-
-    Context:
-    {context.strip()}
-
-    Question: {query.question.strip()}
-    Answer:"""
-
-    output = llm(prompt, max_new_tokens=1024)[0]["generated_text"]
-    answer = output.split("Answer:")[-1].strip()
-
-    return {"answer": answer}
+    try:
+        response = qa_chain.run(query.question)
+        return {"answer": response.strip()}
+    except Exception as e:
+        return {"error": str(e)}
